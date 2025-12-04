@@ -1,0 +1,32 @@
+# Claude Code sensitive/generated files
+.credentials.json
+config.json
+history.jsonl
+*.local.json
+
+# Session data
+session-env/
+shell-snapshots/
+file-history/
+debug/
+todos/
+plans/
+statsig/
+ide/
+local/
+projects/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Backup files
+*.bak
+*.backup

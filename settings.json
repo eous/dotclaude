@@ -1,0 +1,89 @@
+{
+  "model": "opus",
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(ps:*)",
+      "Bash(source:*)",
+      "Bash(source venv/bin/activate)",
+      "Bash(python:*)",
+      "Bash(timeout 300 python:*)",
+      "Bash(tee:*)",
+      "Bash(pkill:*)",
+      "Bash(python3:*)",
+      "Bash(xargs ls:*)",
+      "Bash(find:*)",
+      "Bash(pytest:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(yarn:*)",
+      "Bash(pnpm:*)",
+      "Bash(pip:*)",
+      "Bash(uv:*)",
+      "Bash(cargo:*)",
+      "Bash(make:*)",
+      "Bash(tree:*)",
+      "Bash(which:*)",
+      "Bash(type:*)",
+      "Bash(file:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(cut:*)",
+      "Bash(awk:*)",
+      "Bash(sed:*)",
+      "Bash(jq:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ],
+    "deny": [],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(chmod:*)",
+      "Bash(chown:*)",
+      "Bash(sudo:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)"
+    ],
+    "defaultMode": "plan"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Hook] File modified - consider running /review for code analysis' >&2"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Evaluate if the task is complete. If significant code was written and no review was done, suggest using the code-reviewer agent. Return JSON: {\"decision\": \"stop\" | \"continue\", \"reason\": \"...\"}"
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}
