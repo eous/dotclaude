@@ -1,6 +1,6 @@
 ---
 name: python-best-practices
-description: Python development best practices, patterns, and conventions. Invoke when writing Python code to ensure quality.
+description: Python development best practices, patterns, and conventions. Use when writing Python code, reviewing .py files, discussing pytest, asyncio, type hints, pydantic, dataclasses, or Python project structure. Triggers on mentions of Python, pytest, mypy, ruff, black, FastAPI, Django, Flask.
 ---
 
 # Python Best Practices Skill

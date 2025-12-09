@@ -1,6 +1,7 @@
 {
-  "model": "opus",
-  "alwaysThinkingEnabled": true,
+  "env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
   "permissions": {
     "allow": [
       "WebFetch",
@@ -47,7 +48,17 @@
       "Bash(curl:*)",
       "Bash(wget:*)"
     ],
-    "deny": [],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/secrets/*)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Write(**/.env)",
+      "Write(**/.env.*)"
+    ],
     "ask": [
       "Bash(rm:*)",
       "Bash(mv:*)",
@@ -60,6 +71,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "sonnet[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -67,23 +79,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[Hook] File modified - consider running /review for code analysis' >&2"
+            "command": "f=$(jq -r '.tool_input.file_path // .tool_input.filePath // empty' 2>/dev/null); [ -n \"$f\" ] && [ -f \"$f\" ] && case \"$f\" in *.py) black \"$f\" 2>/dev/null || ruff format \"$f\" 2>/dev/null ;; *.ts|*.tsx|*.js|*.jsx|*.json) npx prettier --write \"$f\" 2>/dev/null ;; *.go) gofmt -w \"$f\" 2>/dev/null ;; *.rs) rustfmt \"$f\" 2>/dev/null ;; esac; echo '[Hook] File modified - consider running /review' >&2"
           }
         ]
       }
     ],
-    "Stop": [
+    "Notification": [
       {
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Evaluate if the task is complete. If significant code was written and no review was done, suggest using the code-reviewer agent. Return JSON: {\"decision\": \"stop\" | \"continue\", \"reason\": \"...\"}"
+            "type": "command",
+            "command": "msg=$(jq -r '.message // \"Awaiting input\"' 2>/dev/null); notify-send -u normal 'Claude Code' \"$msg\" 2>/dev/null || osascript -e \"display notification \\\"$msg\\\" with title \\\"Claude Code\\\"\" 2>/dev/null || true"
           }
         ]
       }
     ]
   },
-  "env": {
-    "PYTHONDONTWRITEBYTECODE": "1"
-  }
+  "alwaysThinkingEnabled": true
 }

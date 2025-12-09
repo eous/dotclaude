@@ -1,6 +1,6 @@
 ---
 name: memory-generator
-description: Automatically generate project memory files (CLAUDE.md) by exploring a codebase. Analyzes structure, patterns, dependencies, and conventions to create comprehensive project context.
+description: Generate CLAUDE.md project memory files by exploring codebases. Use when user asks to "generate memory", "create CLAUDE.md", "document this project", "understand this codebase", or starts work on a new/unfamiliar repository. Triggers on new project onboarding and documentation requests.
 ---
 
 # Memory Generator Skill
