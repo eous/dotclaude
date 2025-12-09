@@ -68,6 +68,16 @@ for cmd in "$SCRIPT_DIR/commands"/*.md; do
     fi
 done
 
+# Install hooks
+echo "Installing hooks..."
+for hook in "$SCRIPT_DIR/hooks"/*.sh; do
+    if [ -f "$hook" ]; then
+        name=$(basename "$hook")
+        install_file "$hook" "$CLAUDE_DIR/hooks/$name"
+        chmod +x "$CLAUDE_DIR/hooks/$name"
+    fi
+done
+
 echo ""
 echo "Installation complete!"
 echo ""
@@ -76,5 +86,6 @@ echo "  - settings.json"
 echo "  - $(ls -1 "$SCRIPT_DIR/agents"/*.md 2>/dev/null | wc -l) agents"
 echo "  - $(ls -1d "$SCRIPT_DIR/skills"/*/ 2>/dev/null | wc -l) skills"
 echo "  - $(ls -1 "$SCRIPT_DIR/commands"/*.md 2>/dev/null | wc -l) commands"
+echo "  - $(ls -1 "$SCRIPT_DIR/hooks"/*.sh 2>/dev/null | wc -l) hooks"
 echo ""
 echo "Restart Claude Code to apply changes."

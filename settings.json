@@ -72,6 +72,12 @@
     "defaultMode": "plan"
   },
   "model": "sonnet[1m]",
+  "companyAnnouncements": [
+    "🚀 Workflow: /overlord (full cycle) | /plan | /implement | /review",
+    "🧪 TDD: /tdd-red → /tdd-green → /tdd-refactor",
+    "🤖 Agents: planner, implementer, debugger, deep-dive, code-reviewer",
+    "📚 Skills: python, typescript, go, rust, sql, git, testing, api-design, security, docker-k8s"
+  ],
   "hooks": {
     "PostToolUse": [
       {
