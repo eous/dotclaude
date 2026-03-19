@@ -6,36 +6,13 @@
     "allow": [
       "WebFetch",
       "WebSearch",
+
       "Bash(ls:*)",
-      "Bash(grep:*)",
-      "Bash(wc:*)",
-      "Bash(ps:*)",
-      "Bash(source:*)",
-      "Bash(source venv/bin/activate)",
-      "Bash(python:*)",
-      "Bash(timeout 300 python:*)",
-      "Bash(tee:*)",
-      "Bash(pkill:*)",
-      "Bash(python3:*)",
-      "Bash(xargs ls:*)",
       "Bash(find:*)",
-      "Bash(pytest:*)",
-      "Bash(git status:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git branch:*)",
-      "Bash(npm:*)",
-      "Bash(npx:*)",
-      "Bash(yarn:*)",
-      "Bash(pnpm:*)",
-      "Bash(pip:*)",
-      "Bash(uv:*)",
-      "Bash(cargo:*)",
-      "Bash(make:*)",
       "Bash(tree:*)",
+      "Bash(file:*)",
       "Bash(which:*)",
       "Bash(type:*)",
-      "Bash(file:*)",
       "Bash(head:*)",
       "Bash(tail:*)",
       "Bash(wc:*)",
@@ -45,8 +22,79 @@
       "Bash(awk:*)",
       "Bash(sed:*)",
       "Bash(jq:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)"
+      "Bash(grep:*)",
+      "Bash(xargs ls:*)",
+      "Bash(ps:*)",
+      "Bash(tee:*)",
+      "Bash(diff:*)",
+      "Bash(stat:*)",
+      "Bash(realpath:*)",
+      "Bash(basename:*)",
+      "Bash(dirname:*)",
+      "Bash(env:*)",
+      "Bash(id:*)",
+      "Bash(date:*)",
+      "Bash(df:*)",
+      "Bash(du:*)",
+      "Bash(free:*)",
+      "Bash(uname:*)",
+      "Bash(cat /proc/*:*)",
+      "Bash(lsb_release:*)",
+
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(timeout 300 python:*)",
+      "Bash(pytest:*)",
+      "Bash(pip:*)",
+      "Bash(uv:*)",
+
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(yarn:*)",
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+
+      "Bash(cargo:*)",
+      "Bash(rustc:*)",
+      "Bash(make:*)",
+      "Bash(cmake:*)",
+      "Bash(gcc:*)",
+      "Bash(g++:*)",
+
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git stash list:*)",
+      "Bash(git remote:*)",
+      "Bash(git tag:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh api:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)",
+
+      "Bash(docker ps:*)",
+      "Bash(docker images:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker inspect:*)",
+      "Bash(docker compose ps:*)",
+      "Bash(docker compose logs:*)",
+
+      "Bash(sqlite3:*)",
+      "Bash(ping:*)",
+      "Bash(host:*)",
+      "Bash(dig:*)",
+      "Bash(ss:*)",
+      "Bash(ip addr:*)",
+      "Bash(ip link:*)",
+      "Bash(ip route:*)"
     ],
     "deny": [
       "Read(.env)",
@@ -54,10 +102,16 @@
       "Read(**/.env)",
       "Read(**/.env.*)",
       "Read(**/secrets/*)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/.credentials.json)",
       "Write(.env)",
       "Write(.env.*)",
       "Write(**/.env)",
-      "Write(**/.env.*)"
+      "Write(**/.env.*)",
+      "Write(**/secrets/*)",
+      "Write(**/*.key)",
+      "Write(**/*.pem)"
     ],
     "ask": [
       "Bash(rm:*)",
@@ -65,19 +119,31 @@
       "Bash(chmod:*)",
       "Bash(chown:*)",
       "Bash(sudo:*)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)",
+      "Bash(rsync:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(pkill:*)",
+      "Bash(kill:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git checkout:*)",
+      "Bash(git stash drop:*)",
+      "Bash(git stash pop:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(docker run:*)",
+      "Bash(docker exec:*)",
+      "Bash(docker compose up:*)",
+      "Bash(docker compose down:*)",
+      "Bash(npm publish:*)",
+      "Bash(pip install:*)"
     ],
     "defaultMode": "plan"
   },
-  "model": "sonnet[1m]",
-  "companyAnnouncements": [
-    "🚀 Workflow: /overlord (full cycle) | /plan | /implement | /review",
-    "🧪 TDD: /tdd-red → /tdd-green → /tdd-refactor",
-    "🤖 Agents: planner, implementer, debugger, deep-dive, code-reviewer",
-    "📚 Skills: python, typescript, go, rust, sql, git, testing, api-design, security, docker-k8s"
-  ],
+  "model": "opus[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -85,7 +151,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // .tool_input.filePath // empty' 2>/dev/null); [ -n \"$f\" ] && [ -f \"$f\" ] && case \"$f\" in *.py) black \"$f\" 2>/dev/null || ruff format \"$f\" 2>/dev/null ;; *.ts|*.tsx|*.js|*.jsx|*.json) npx prettier --write \"$f\" 2>/dev/null ;; *.go) gofmt -w \"$f\" 2>/dev/null ;; *.rs) rustfmt \"$f\" 2>/dev/null ;; esac; echo '[Hook] File modified - consider running /review' >&2"
+            "command": "f=$(jq -r '.tool_input.file_path // .tool_input.filePath // empty' 2>/dev/null); [ -n \"$f\" ] && [ -f \"$f\" ] && case \"$f\" in *.py) black \"$f\" 2>/dev/null || ruff format \"$f\" 2>/dev/null ;; *.ts|*.tsx|*.js|*.jsx|*.json) npx prettier --write \"$f\" 2>/dev/null ;; *.go) gofmt -w \"$f\" 2>/dev/null ;; *.rs) rustfmt \"$f\" 2>/dev/null ;; esac"
           }
         ]
       }
@@ -101,5 +167,12 @@
       }
     ]
   },
-  "alwaysThinkingEnabled": true
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
 }
